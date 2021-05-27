@@ -7,14 +7,14 @@ Script the creation of a web server, and a script to check the server is up.
 
 # Prerequisites
 
-You will need an AWS account. Create one if you don't own one already. You can use free-tier resources for this test.
+You will need an AWS or GCP account. Create one if you don't own one already. You can use free-tier resources for this test. You need to provide a credit card in both cases, but you won't be charged. 
 
 # The Task
 
-You are required to set up a new server in AWS. It must:
+You are required to set up a new server in AWS/GCP. It must:
 
 * Be publicly accessible.
-* Run Nginx.
+* Run Nginx or Apache.
 * Serve a `/version.txt` file, containing only static text representing a version number, for example:
 
 ```
@@ -30,18 +30,18 @@ Fork this repository.
 * Alter the README to contain the steps required to:
   * Create the server.
   * Run the checker script.
-* Provide us IAM credentials to login to the AWS account. If you have other resources in it make sure we can only access what is related to this test.
+* Provide us IAM credentials to login to the AWS/GCP account. If you have other resources in it make sure we can only access what is related to this test.
 
-Give our account `engagetech` access to your fork, and send us an email when you’re done. Feel free to ask questions if anything is unclear, confusing, or just plain missing.
+Give our account access to your fork, and send us an email when you’re done. Feel free to ask questions if anything is unclear, confusing, or just plain missing.
 
 # Extra Credit
 
 We know time is precious, we won't mark you down for not doing the extra credits, but if you want to give them a go...
 
-* Use a CloudFormation template to set up the server.
+* Use a Terraform template to set up the server.
 * Use a configuration management tool (such as Puppet, Chef or Ansible) to bootstrap the server.
 * Put the server behind a load balancer.
-* Run Nginx inside a Docker container.
+* Run Nginx/Apache2 inside a Docker container.
 * Make the checker script SSH into the instance, check if Nginx is running and start it if it isn't.
 
 # Questions
