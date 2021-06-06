@@ -412,7 +412,7 @@ nginx ansible_host=10.128.0.3 ansible_connection=ssh ansible_ssh_user=ansible an
 
 ## make the script run periodically
 
-- We will make the ckecker script run every 20min ==> This task will create a file in /etc/cron.d/check-script
+- We will make the ckecker script run periodically at 11:35  ==> This task will create a file in /etc/cron.d/check-script
 - Create a new playbook `cron.yaml`
 
 
@@ -424,38 +424,32 @@ nginx ansible_host=10.128.0.3 ansible_connection=ssh ansible_ssh_user=ansible an
   tasks:
 
    - name: run check script
-     cron: minute="20"
-      name="run check script (every 20min)"
-       cron_file="check-script"
-       user="ansible"
-       job="/home/ansible/checkscript.sh"
-
+     cron:
+       name: "run check script"
+       minute: "35"
+       hour: "11"
+       cron_file: "check-script"
+       user: "ansible"
+       job: "/home/ansible/checkscript.sh"
 ```
 - Execute playbook:
 
 ```
-[khammarii_mariem@ansible-control-node emnostask]$ ansible-playbook cron.yaml 
 
-....
+[khammarii_mariem@ansible-control-node emnostask]$ ansible-playbook cron.yaml -u ansible -k
+SSH password: 
 
-PLAYBOOK: cron.yaml ***********************************************************************************************
-1 plays in cron.yaml
+PLAY [check nginx is up with cron] *******************************************************************
 
-PLAY [check nginx is up with cron] ********************************************************************************
-
-TASK [Gathering Facts] ********************************************************************************************
-task path: /home/khammarii_mariem/emnostask/cron.yaml:3
+TASK [Gathering Facts] *******************************************************************************
 ok: [nginx]
-META: ran handlers
 
-TASK [run check script] *******************************************************************************************
-task path: /home/khammarii_mariem/emnostask/cron.yaml:7
-changed: [nginx] => {"changed": true, "cron_file": "check-script", "envs": [], "jobs": ["run check script (every 20min)"]}
-META: ran handlers
-META: ran handlers
+TASK [run check script] ******************************************************************************
+changed: [nginx]
 
-PLAY RECAP ********************************************************************************************************
+PLAY RECAP *******************************************************************************************
 nginx                      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
 
 ```
 - Go to the nginx server and grant permissions to ansible user on `/etc/cron.d`
@@ -468,7 +462,8 @@ sudo chown ansible cron.d
 
 ![image](https://user-images.githubusercontent.com/85032988/120908676-85dfd480-c664-11eb-95eb-8044d233b567.png)
 
-![image](https://user-images.githubusercontent.com/85032988/120908681-8d9f7900-c664-11eb-9a90-eb09ce69e1ef.png)
+![image](https://user-images.githubusercontent.com/85032988/120923095-9162e800-c6c4-11eb-993e-1f8558aede67.png)
+
 
 
 
