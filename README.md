@@ -211,6 +211,7 @@ allow {
 ```
 - terraform plan output:
 
+![image](https://user-images.githubusercontent.com/85032988/120918080-71bec600-c6aa-11eb-8590-9abd821dc635.png)
 
 
 
@@ -245,7 +246,7 @@ sudo cp nginx.conf nginx.conf.bak
 [khammarii_mariem@nginx-server cron.d]$  cat /usr/share/nginx/version/version.txt 
 1.16.1
 ```
--grant nginx user execution permissionson version directory and version.txt file
+- Grant nginx user execution permissionson version directory and version.txt file
 ```
 sudo chown nginx:nginx version
 sudo chmod  +x version
@@ -254,6 +255,7 @@ sudo chmod +x  version.txt
 
 ```
 - Edit `/etc/nginx/nginx.conf` file and restart nginx service:
+- Replace `root         /usr/share/nginx/html;` with `root         /usr/share/nginx/version; `
 
 ```
 ...
@@ -357,13 +359,13 @@ network_interface {
     }
 }
 ```
--From GCP console, we can check the deployement
+- From GCP console, we can check the deployement
 
 ![image](https://user-images.githubusercontent.com/85032988/120908707-e111c700-c664-11eb-83aa-ff76b3348e81.png)
 
 ![image](https://user-images.githubusercontent.com/85032988/120908708-e8d16b80-c664-11eb-8a65-4a7ae25bb426.png)
 
--SSH to ansible node and verify ansible is installed
+- SSH to ansible node and verify ansible is installed
 
 ![image](https://user-images.githubusercontent.com/85032988/120908710-ee2eb600-c664-11eb-80dd-896947d45e6d.png)
 
@@ -371,6 +373,12 @@ network_interface {
 # Create the ckecker playbook 
 
 - Create a user `ansible` to execute the playbook and authenticate to the remote nginx server
+- Edit the `/etc/ansible/hosts` file and add the nginx server 
+```
+nginx ansible_host=10.128.0.3 ansible_connection=ssh ansible_ssh_user=ansible ansible_ssh_pass=******
+
+```
+
 - Create the playbook `Checkplaybook.yaml` 
 
 ```
@@ -451,6 +459,7 @@ nginx                      : ok=2    changed=1    unreachable=0    failed=0    s
 
 ```
 - Go to the nginx server and grant permissions to ansible user on `/etc/cron.d`
+
 ``
 sudo chown ansible cron.d
 ``
